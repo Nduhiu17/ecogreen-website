@@ -1,0 +1,524 @@
+import React, { useState, useEffect } from 'react';
+import cabrosImg from './assets/work-in-progress-cabros.jpg'; 
+import cabrosImg1 from './assets/cabros1.jpeg';
+import drainageImg from './assets/drainage-construction-work.jpg'; 
+import drainageImg1 from './assets/drainage1.jpeg';
+import roadImg1 from './assets/road.jpeg';
+import roadImg from './assets/road1.jpg';
+import whatsappIcon from './assets/whatsapp.svg'; 
+import landscaping1 from './assets/landscaping1.png'
+import landscaping from  './assets/landscaping.png'
+import cabros1 from './assets/cabros1.png'
+import cabros from './assets/cabros.png'
+import drain1 from './assets/drain1.png'
+import drain from './assets/drain.png'
+import kerbs1 from './assets/kerbs1.png'
+import kerbs from './assets/kerbs.png'
+// Main App Component
+function App() {
+  const [scrollY, setScrollY] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const fadeIn = (elementOffset) => {
+    const triggerPoint = window.innerHeight * 0.8; // Trigger when 80% of element is in view
+    // Ensure elementOffset is not null or undefined
+    if (elementOffset === null || typeof elementOffset === 'undefined') {
+      return 'opacity-0 translate-y-10'; // Default to hidden if offset can't be determined
+    }
+    return scrollY > elementOffset - triggerPoint ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-800 font-inter antialiased">
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 w-full bg-white bg-opacity-95 shadow-md z-50 transition-all duration-300">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          {/* Logo */}
+          <a href="#" className="flex items-center space-x-2">
+            <img src="https://placehold.co/40x40/228B22/FFFFFF?text=Logo" alt="Ecogreen Logo" className="h-10 w-10 rounded-full shadow-md" />
+            <span className="text-xl font-bold text-emerald-700">Ecogreen</span>
+          </a>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-gray-600 hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              )}
+            </svg>
+          </button>
+                <div className="hidden md:flex space-x-8">
+                <a href="#" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Home</a>
+                <a href="#services" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Services</a>
+                <a href="#projects" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Projects</a>
+                <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Testimonials</a>
+                <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Get Ideas</a>
+                <a
+                  href="https://wa.me/254758712537"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                  title="Chat with us on WhatsApp"
+                >
+                  <img
+                  src={whatsappIcon}
+                  alt="WhatsApp"
+                  // className="h-16 w-16"
+                  />
+                </a>
+                </div>
+              </div>
+
+              {/* Mobile Menu Overlay */}
+        <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} bg-white shadow-lg pb-4`}>
+          <div className="flex flex-col items-center space-y-4 pt-2">
+            <a href="#" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Home</a>
+            <a href="#services" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Services</a>
+            <a href="#projects" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Projects</a>
+            <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Testimonials</a>
+            <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Get Ideas</a>
+             <a
+                  href="https://wa.me/254758712537"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                  title="Chat with us on WhatsApp"
+                >
+                  <img
+                  src={whatsappIcon}
+                  alt="WhatsApp"
+                  className="h-26 w-26"
+                  />
+                  </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* Header/Hero Section (Adjusted padding-top to account for fixed navbar) */}
+      <header className="relative h-screen flex items-center justify-center text-center bg-cover bg-center pt-16 md:pt-24" // Added padding-top
+        style={{ backgroundImage: `url(https://placehold.co/1920x1080/228B22/FFFFFF?text=Ecogreen+Landscaping)` }}> {/* Changed image placeholder to a green tone */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-700/80 to-green-600/70"></div> {/* Green gradient */}
+        <div className="relative z-10 p-6 max-w-4xl mx-auto">
+          <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight animate-fade-in-down drop-shadow-lg">
+            Ecogreen: Building Dreams, Nurturing Nature
+          </h1>
+          <p className="mt-4 text-xl md:text-2xl text-emerald-100 font-light animate-fade-in-up delay-200 drop-shadow"> {/* Emerald text */}
+            Your Trusted Partner in Landscaping, Construction & Drainage Solutions.
+          </p>
+          <button className="mt-8 px-8 py-4 bg-white text-emerald-700 font-bold rounded-full shadow-lg hover:bg-emerald-100 transition duration-300 transform hover:scale-105 active:scale-95 animate-bounce-slow"> 
+            <a
+                  href="https://wa.me/254758712537"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                  title="Chat with us on WhatsApp"
+                >
+                    Get a Free Quote
+                </a>
+          </button>
+        </div>
+      </header>
+
+      {/* Services Section */}
+      <section id="services" className="py-16 md:py-24 bg-white shadow-inner">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-emerald-800 mb-12 animate-fade-in-up"> {/* Emerald heading */}
+            Our Expert Services
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {/* Landscaping */}
+            <ServiceCard
+              title="Professional Landscaping"
+              description="Creating beautiful and sustainable outdoor environments tailored to your vision and budget."
+              images={
+                [landscaping,landscaping1]
+              }
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            {/* Cabros */}
+            <ServiceCard
+              title="Cabro Paving"
+              description="Transform your outdoor spaces with durable and aesthetically pleasing cabro paving. Perfect for driveways, pathways, and patios."
+              images={[
+                cabrosImg1,
+                cabrosImg,
+                cabros1,
+                cabros 
+              ]}
+              // Using a ref to get offsetTop more reliably
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            {/* Drainage */}
+            <ServiceCard
+              title="Advanced Drainage Solutions"
+              description="Effective drainage systems to protect your property from water damage and ensure proper water management."
+              images={[
+                drainageImg,
+                drainageImg1,
+                drain1 ,
+                drain 
+              ]}
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            {/* Roads */}
+            <ServiceCard
+              title="Road Construction"
+              description="Building robust and smooth roads, from design to execution, ensuring longevity and safety."
+              images={[
+                roadImg1,
+                roadImg
+              ]}
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            {/* Cartarats */}
+            <ServiceCard
+              title="Cartarats & Kerbs"
+              description="Precision-engineered cartarats and kerbs for effective boundary definition and structural integrity."
+              images={[
+                kerbs1,
+                kerbs
+              ]}
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Past Projects Section */}
+      <section id="projects" className="py-16 md:py-24 bg-gray-100">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-emerald-800 mb-12 animate-fade-in-up"> {/* Emerald heading */}
+            Our Past Successful Projects
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <ProjectCard
+              title="Residential Garden Oasis"
+              image="https://placehold.co/800x600/86EFAC/FFFFFF?text=Project+1:+Garden+Oasis"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            <ProjectCard
+              title="Commercial Road Network"
+              image="https://placehold.co/800x600/6B7280/FFFFFF?text=Project+2:+Road+Network"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            <ProjectCard
+              title="Urban Drainage System"
+              image="https://placehold.co/800x600/6B7280/FFFFFF?text=Project+3:+Drainage+System"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            <ProjectCard
+              title="Cabro Pathway Installation"
+              image="https://placehold.co/800x600/6B7280/FFFFFF?text=Project+4:+Cabro+Path"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            <ProjectCard
+              title="Large-Scale Landscaping"
+              image="https://placehold.co/800x600/86EFAC/FFFFFF?text=Project+5:+Large+Landscaping"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-16 md:py-24 bg-white shadow-inner">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-emerald-800 mb-12 animate-fade-in-up"> {/* Emerald heading */}
+            What Our Happy Customers Say
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <TestimonialCard
+              quote="Ecogreen transformed our garden into a beautiful oasis. Their attention to detail and professionalism were outstanding!"
+              author="Jane Doe, Homeowner"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            <TestimonialCard
+              quote="The drainage system they installed saved our property from heavy rains. Highly recommend their expertise!"
+              author="John Smith, Business Owner"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+            <TestimonialCard
+              quote="Excellent road construction work. Completed on time and within budget. A truly reliable partner."
+              author="A. Sharma, Property Developer"
+              elementRef={(el) => el && fadeIn(el.offsetTop)}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: AI-Powered Project Idea Generator Section */}
+      <section id="project-generator" className="py-16 md:py-24 bg-gradient-to-br from-emerald-700 to-green-800 text-white shadow-lg"> {/* Green gradient */}
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 animate-fade-in-up">
+            Need Inspiration? ✨ Get Custom Project Ideas!
+          </h2>
+          <ProjectIdeaGenerator />
+        </div>
+      </section>
+
+      {/* Footer Section (Removed redundant navigation as it's now in the header) */}
+      <footer className="bg-gray-900 text-gray-300 py-12">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-lg mb-2">
+            Ecogreen Landscaping & Contractors<br />
+            123 Green Avenue, Nairobi, Kenya<br />
+            Phone: +254 712 345 678 | Email: info@ecogreen.com
+          </p>
+          <p className="text-sm">&copy; {new Date().getFullYear()} Ecogreen. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+// Service Card Component
+function ServiceCard({ title, description, images, elementRef }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const cardRef = React.useRef(null); // Create a ref for the card element
+
+  useEffect(() => {
+    // Pass the element's offset to the parent's fadeIn function via elementRef prop
+    if (cardRef.current && elementRef) {
+      elementRef(cardRef.current);
+    }
+
+    // Auto-cycle images every 3 seconds if there are multiple images
+    if (images.length > 1) {
+      const timer = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      }, 3000);
+      return () => clearInterval(timer);
+    }
+  }, [images.length, elementRef]); // Add elementRef to dependencies
+
+  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+
+  return (
+    <div ref={cardRef} className={`bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}>
+      <div className="relative h-60 overflow-hidden">
+        {images.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`${title} - ${index + 1}`}
+            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+            onError={(e) => { e.target.src = 'https://placehold.co/800x600/CCCCCC/000000?text=Image+Error'; }}
+          />
+        ))}
+      </div>
+      <div className="p-6">
+        <h3 className="text-2xl font-semibold text-emerald-700 mb-3">{title}</h3> {/* Emerald text */}
+        <p className="text-gray-600 leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+}
+
+// Landscaping Specific Card Component (Before & After)
+function LandscapingCard({ title, description, beforeImage, afterImage, elementRef }) {
+  const [showBefore, setShowBefore] = useState(true);
+  const cardRef = React.useRef(null); // Create a ref for the card element
+
+  useEffect(() => {
+    // Pass the element's offset to the parent's fadeIn function via elementRef prop
+    if (cardRef.current && elementRef) {
+      elementRef(cardRef.current);
+    }
+  }, [elementRef]);
+
+  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+
+  return (
+    <div ref={cardRef} className={`bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}>
+      <div className="relative h-60 overflow-hidden cursor-pointer" onClick={() => setShowBefore(!showBefore)}>
+        <img
+          src={beforeImage}
+          alt="Before Landscaping"
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${showBefore ? 'opacity-100' : 'opacity-0'}`}
+          onError={(e) => { e.target.src = 'https://placehold.co/800x600/FCA5A5/FFFFFF?text=Before+Image+Error'; }}
+        />
+        <img
+          src={afterImage}
+          alt="After Landscaping"
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${!showBefore ? 'opacity-100' : 'opacity-0'}`}
+          onError={(e) => { e.target.src = 'https://placehold.co/800x600/86EFAC/FFFFFF?text=After+Image+Error'; }}
+        />
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 text-white text-lg font-bold transition-opacity duration-500 opacity-0 hover:opacity-100">
+          Click to see {showBefore ? 'After' : 'Before'}
+        </div>
+      </div>
+      <div className="p-6">
+        <h3 className="text-2xl font-semibold text-emerald-700 mb-3">{title}</h3> {/* Emerald text */}
+        <p className="text-gray-600 leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+}
+
+// Project Card Component
+function ProjectCard({ title, image, elementRef }) {
+  const cardRef = React.useRef(null); // Create a ref for the card element
+
+  useEffect(() => {
+    // Pass the element's offset to the parent's fadeIn function via elementRef prop
+    if (cardRef.current && elementRef) {
+      elementRef(cardRef.current);
+    }
+  }, [elementRef]);
+
+  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+
+  return (
+    <div ref={cardRef} className={`bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-500 ease-in-out ${motionClass}`}>
+      <img
+        src={image}
+        alt={title}
+        className="w-full h-60 object-cover"
+        onError={(e) => { e.target.src = 'https://placehold.co/800x600/CCCCCC/000000?text=Project+Image+Error'; }}
+      />
+      <div className="p-4">
+        <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+      </div>
+    </div>
+  );
+}
+
+// Testimonial Card Component
+function TestimonialCard({ quote, author, elementRef }) {
+  const cardRef = React.useRef(null); // Create a ref for the card element
+
+  useEffect(() => {
+    // Pass the element's offset to the parent's fadeIn function via elementRef prop
+    if (cardRef.current && elementRef) {
+      elementRef(cardRef.current);
+    }
+  }, [elementRef]);
+
+  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+
+  return (
+    <div ref={cardRef} className={`bg-emerald-700 text-white p-6 rounded-xl shadow-lg flex flex-col justify-between transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}> {/* Emerald background */}
+      <p className="text-lg italic mb-4">"{quote}"</p>
+      <p className="text-right font-medium text-emerald-100">- {author}</p> {/* Emerald text */}
+    </div>
+  );
+}
+
+// Project Idea Generator Component
+function ProjectIdeaGenerator() {
+  const [prompt, setPrompt] = useState('');
+  const [generatedIdea, setGeneratedIdea] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const generateIdea = async () => {
+    setLoading(true);
+    setGeneratedIdea('');
+    setError('');
+
+    if (!prompt.trim()) {
+      setError('Please describe your project idea to get inspiration.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      let chatHistory = [];
+      chatHistory.push({ role: "user", parts: [{ text: `Generate a creative and concise landscaping or construction project idea based on the following description, suitable for a company like Ecogreen. Focus on unique features, benefits, and a catchy name. Description: "${prompt}"` }] });
+      const payload = { contents: chatHistory };
+      const apiKey = "AIzaSyC1q_KJysimHoEnfZgofyIrsahF7NLmP0c"; // Canvas will automatically provide this at runtime
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (result.candidates && result.candidates.length > 0 &&
+          result.candidates[0].content && result.candidates[0].content.parts &&
+          result.candidates[0].content.parts.length > 0) {
+        const text = result.candidates[0].content.parts[0].text;
+        setGeneratedIdea(text);
+      } else {
+        setError('Failed to generate an idea. Please try again or refine your prompt.');
+        console.error('Gemini API response structure unexpected:', result);
+      }
+    } catch (err) {
+      setError('An error occurred while connecting to the AI. Please check your network and try again.');
+      console.error('Error calling Gemini API:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-lg p-6 md:p-10 max-w-3xl mx-auto transform transition-all duration-500 ease-in-out animate-fade-in-up">
+      <div className="mb-6">
+        <label htmlFor="project-prompt" className="block text-gray-700 text-lg font-medium mb-3">
+          Tell us about your vision:
+        </label>
+        <textarea
+          id="project-prompt"
+          className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-gray-800 resize-y min-h-[100px]" /* Emerald focus ring */
+          rows="4"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="e.g., 'I want a modern garden with a small water feature and space for outdoor dining in a sunny area.'"
+        ></textarea>
+      </div>
+      <button
+        onClick={generateIdea}
+        className="w-full flex items-center justify-center px-8 py-4 bg-emerald-600 text-white font-bold rounded-full shadow-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" /* Emerald button */
+        disabled={loading}
+      >
+        {loading ? (
+          <svg className="animate-spin h-5 w-5 text-white mr-3" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        ) : (
+          'Generate Idea ✨'
+        )}
+      </button>
+
+      {generatedIdea && (
+        <div className="mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-lg shadow-md animate-fade-in-up"> {/* Emerald background/border */}
+          <h3 className="text-xl font-semibold text-emerald-800 mb-4">Your Custom Project Idea:</h3> {/* Emerald text */}
+          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{generatedIdea}</p>
+        </div>
+      )}
+
+      {error && (
+        <div className="mt-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg shadow-md animate-fade-in-up">
+          <p className="font-medium">{error}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+export default App;
