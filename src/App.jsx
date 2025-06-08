@@ -126,7 +126,7 @@ function App() {
             <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Testimonials</a>
             <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Get Ideas</a>
             <a
-              href="https://wa.me/254758712537"
+              href="https://wa.me/254796515157"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center"
@@ -150,7 +150,7 @@ function App() {
             <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Testimonials</a>
             <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Get Ideas</a>
             <a
-              href="https://wa.me/254758712537"
+              href="https://wa.me/2547967515157"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center"
@@ -175,7 +175,7 @@ function App() {
           </p>
           <button className="mt-8 px-8 py-4 bg-white text-emerald-700 font-bold rounded-full shadow-lg hover:bg-emerald-100 transition duration-300 transform hover:scale-105 active:scale-95 animate-bounce-slow">
             <a
-                  href="https://wa.me/254758712537"
+                  href="https://wa.me/254796515157"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center"
