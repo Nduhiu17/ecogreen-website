@@ -284,14 +284,56 @@ function App() {
       </section>
 
       {/* Footer Section (Removed redundant navigation as it's now in the header) */}
-      <footer className="bg-gray-900 text-gray-300 py-12">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-lg mb-2">
-            Ecogreen Landscaping & Contractors<br />
-            123 Green Avenue, Nairobi, Kenya<br />
-            Phone: +254 712 345 678 | Email: info@ecogreen.com
-          </p>
-          <p className="text-sm">&copy; {new Date().getFullYear()} Ecogreen. All rights reserved.</p>
+      <footer className="bg-gray-950 text-gray-200 py-16"> {/* Darker background, lighter text, more padding */}
+        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8"> {/* Responsive grid layout */}
+
+          {/* Column 1: Logo and Company Name */}
+          <div className="md:col-span-1 flex flex-col items-center md:items-start">
+            <a href="#" className="flex items-center space-x-3 mb-4">
+              <img src="https://placehold.co/40x40/228B22/FFFFFF?text=Logo" alt="Ecogreen Logo" className="h-10 w-10 rounded-full shadow-md" />
+              <span className="text-2xl font-bold text-emerald-500">Ecogreen</span> {/* Use emerald for logo text */}
+            </a>
+            <p className="text-sm text-center md:text-left">Building Dreams, Nurturing Nature.</p>
+          </div>
+
+          {/* Column 2: Contact Information */}
+          <div className="md:col-span-1 text-center md:text-left">
+            <h4 className="text-xl font-semibold text-white mb-4">Contact Us</h4>
+            <p className="mb-2">Nairobi, Kenya</p>
+            <p className="mb-2">Phone: <a href="tel:+254796515157" className="hover:text-emerald-400 transition-colors duration-200">+254 796515157</a></p>
+            <p className="mb-2">Email: <a href="mailto:info@ecogreen.com" className="hover:text-emerald-400 transition-colors duration-200">info@ecogreen.com</a></p>
+          </div>
+
+          {/* Column 3: Quick Links */}
+          <div className="md:col-span-1 text-center md:text-left">
+            <h4 className="text-xl font-semibold text-white mb-4">Quick Links</h4>
+            <ul>
+              <li className="mb-2"><a href="#" className="hover:text-emerald-400 transition-colors duration-200">Home</a></li>
+              <li className="mb-2"><a href="#services" className="hover:text-emerald-400 transition-colors duration-200">Services</a></li>
+              <li className="mb-2"><a href="#projects" className="hover:text-emerald-400 transition-colors duration-200">Projects</a></li>
+              <li className="mb-2"><a href="#testimonials" className="hover:text-emerald-400 transition-colors duration-200">Testimonials</a></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Social Media / CTA (WhatsApp) */}
+          <div className="md:col-span-1 flex flex-col items-center md:items-start">
+            <h4 className="text-xl font-semibold text-white mb-4">Connect With Us</h4>
+            <a
+              href="https://wa.me/254796515157"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105"
+              title="Chat with us on WhatsApp"
+            >
+              <img src={whatsappIcon} alt="WhatsApp" className="h-6 w-6" />
+              <span>WhatsApp Us</span>
+            </a>
+          </div>
+
+        </div>
+
+        <div className="container mx-auto px-6 mt-12 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+          <p>&copy; {new Date().getFullYear()} Ecogreen Landscapers & Contractors. All rights reserved.</p>
         </div>
       </footer>
     </div>
@@ -302,16 +344,15 @@ function App() {
 function ServiceCard({ title, description, images, elementRef }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null); // Use useRef for the card element
+  const cardRef = useRef(null);
 
-  // Ref for the interval timer
   const intervalRef = useRef(null);
 
   const startAutoCycle = () => {
     if (images.length > 1) {
       intervalRef.current = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, 3000); // Change image every 3 seconds
+      }, 3000);
     }
   };
 
@@ -322,43 +363,40 @@ function ServiceCard({ title, description, images, elementRef }) {
   };
 
   useEffect(() => {
-    // Pass the element's offset to the parent's fadeIn function via elementRef prop
     if (cardRef.current && elementRef) {
       elementRef(cardRef.current);
     }
 
-    // Start auto-cycling when component mounts or images change, if not hovered
     if (!isHovered) {
       startAutoCycle();
     }
 
-    // Cleanup interval on component unmount or images/hover state change
     return () => stopAutoCycle();
   }, [images.length, elementRef, isHovered]);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    stopAutoCycle(); // Pause autoplay on hover
+    stopAutoCycle();
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    startAutoCycle(); // Resume autoplay when not hovered
+    startAutoCycle();
   };
 
   const goToPrev = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-    stopAutoCycle(); // Stop auto-cycle on manual navigation
-    startAutoCycle(); // Restart after a brief moment to avoid immediate next slide
+    stopAutoCycle();
+    startAutoCycle();
   };
 
   const goToNext = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    stopAutoCycle(); // Stop auto-cycle on manual navigation
-    startAutoCycle(); // Restart after a brief moment to avoid immediate next slide
+    stopAutoCycle();
+    startAutoCycle();
   };
 
-  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+  const motionClass = elementRef ? elementRef(cardRef.current) : '';
 
   return (
     <div
@@ -407,8 +445,8 @@ function ServiceCard({ title, description, images, elementRef }) {
                   key={idx}
                   onClick={() => {
                     setCurrentImageIndex(idx);
-                    stopAutoCycle(); // Stop auto-cycle on manual navigation
-                    startAutoCycle(); // Restart after a brief moment
+                    stopAutoCycle();
+                    startAutoCycle();
                   }}
                   className={`w-3 h-3 rounded-full ${idx === currentImageIndex ? 'bg-white' : 'bg-gray-400'} opacity-75 focus:outline-none hover:opacity-100 transition-colors duration-300`}
                   aria-label={`Go to image ${idx + 1}`}
@@ -419,7 +457,7 @@ function ServiceCard({ title, description, images, elementRef }) {
         )}
       </div>
       <div className="p-6">
-        <h3 className="text-2xl font-semibold text-emerald-700 mb-3">{title}</h3> {/* Emerald text */}
+        <h3 className="text-2xl font-semibold text-emerald-700 mb-3">{title}</h3>
         <p className="text-gray-600 leading-relaxed">{description}</p>
       </div>
     </div>
@@ -429,16 +467,15 @@ function ServiceCard({ title, description, images, elementRef }) {
 // Landscaping Specific Card Component (Before & After)
 function LandscapingCard({ title, description, beforeImage, afterImage, elementRef }) {
   const [showBefore, setShowBefore] = useState(true);
-  const cardRef = useRef(null); // Create a ref for the card element
+  const cardRef = useRef(null);
 
   useEffect(() => {
-    // Pass the element's offset to the parent's fadeIn function via elementRef prop
     if (cardRef.current && elementRef) {
       elementRef(cardRef.current);
     }
   }, [elementRef]);
 
-  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+  const motionClass = elementRef ? elementRef(cardRef.current) : '';
 
   return (
     <div ref={cardRef} className={`bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}>
@@ -460,7 +497,7 @@ function LandscapingCard({ title, description, beforeImage, afterImage, elementR
         </div>
       </div>
       <div className="p-6">
-        <h3 className="text-2xl font-semibold text-emerald-700 mb-3">{title}</h3> {/* Emerald text */}
+        <h3 className="text-2xl font-semibold text-emerald-700 mb-3">{title}</h3>
         <p className="text-gray-600 leading-relaxed">{description}</p>
       </div>
     </div>
@@ -469,16 +506,15 @@ function LandscapingCard({ title, description, beforeImage, afterImage, elementR
 
 // Project Card Component
 function ProjectCard({ title, image, elementRef }) {
-  const cardRef = useRef(null); // Create a ref for the card element
+  const cardRef = useRef(null);
 
   useEffect(() => {
-    // Pass the element's offset to the parent's fadeIn function via elementRef prop
     if (cardRef.current && elementRef) {
       elementRef(cardRef.current);
     }
   }, [elementRef]);
 
-  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+  const motionClass = elementRef ? elementRef(cardRef.current) : '';
 
   return (
     <div ref={cardRef} className={`bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-500 ease-in-out ${motionClass}`}>
@@ -497,21 +533,20 @@ function ProjectCard({ title, image, elementRef }) {
 
 // Testimonial Card Component
 function TestimonialCard({ quote, author, elementRef }) {
-  const cardRef = useRef(null); // Create a ref for the card element
+  const cardRef = useRef(null);
 
   useEffect(() => {
-    // Pass the element's offset to the parent's fadeIn function via elementRef prop
     if (cardRef.current && elementRef) {
       elementRef(cardRef.current);
     }
   }, [elementRef]);
 
-  const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
+  const motionClass = elementRef ? elementRef(cardRef.current) : '';
 
   return (
-    <div ref={cardRef} className={`bg-emerald-700 text-white p-6 rounded-xl shadow-lg flex flex-col justify-between transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}> {/* Emerald background */}
+    <div ref={cardRef} className={`bg-emerald-700 text-white p-6 rounded-xl shadow-lg flex flex-col justify-between transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}>
       <p className="text-lg italic mb-4">"{quote}"</p>
-      <p className="text-right font-medium text-emerald-100">- {author}</p> {/* Emerald text */}
+      <p className="text-right font-medium text-emerald-100">- {author}</p>
     </div>
   );
 }
@@ -538,10 +573,8 @@ function ProjectIdeaGenerator() {
       let chatHistory = [];
       chatHistory.push({ role: "user", parts: [{ text: `Generate a creative and concise landscaping or construction project idea based on the following description, suitable for a company like Ecogreen. Focus on unique features, benefits, and a catchy name. Description: "${prompt}"` }] });
 
-      // We'll call the API twice: once for the idea, once for the image prompt
-      // First call: get the idea
       const ideaPayload = { contents: [chatHistory[0]] };
-      const apiKey = "AIzaSyC1q_KJysimHoEnfZgofyIrsahF7NLmP0c"; // Canvas will automatically provide this at runtime
+      const apiKey = "AIzaSyC1q_KJysimHoEnfZgofyIrsahF7NLmP0c";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
       const ideaResponse = await fetch(apiUrl, {
@@ -562,11 +595,9 @@ function ProjectIdeaGenerator() {
         return;
       }
 
-      // Second call: get the image prompt from a new conversation with the idea
       const imagePromptChatHistory = [];
       imagePromptChatHistory.push({ role: "user", parts: [{ text: `Based on this project idea: "${ideaText}", suggest a relevant royalty-free image prompt for this project idea. Only output the image prompt, nothing else. The image prompt should be suitable for a general image search engine like Unsplash, avoiding specific brand names.` }] });
       const imagePromptPayload = { contents: imagePromptChatHistory };
-
 
       const imagePromptResponse = await fetch(apiUrl, {
         method: 'POST',
@@ -579,10 +610,9 @@ function ProjectIdeaGenerator() {
       if (imagePromptResult.candidates && imagePromptResult.candidates.length > 0 &&
           imagePromptResult.candidates[0].content && imagePromptResult.candidates[0].content.parts &&
           imagePromptResult.candidates[0].content.parts.length > 0) {
-        imagePrompt = imagePromptResult.candidates[0].content.parts[0].text.replace(/["\n]/g, '').trim(); // Clean up response
+        imagePrompt = imagePromptResult.candidates[0].content.parts[0].text.replace(/["\n]/g, '').trim();
       }
 
-      // Use Unsplash for royalty-free images
       let imageUrl = '';
       if (imagePrompt) {
         const encodedPrompt = encodeURIComponent(imagePrompt);
@@ -624,7 +654,7 @@ function ProjectIdeaGenerator() {
         </label>
         <textarea
           id="project-prompt"
-          className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-gray-800 resize-y min-h-[100px]" /* Emerald focus ring */
+          className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none text-gray-800 resize-y min-h-[100px]"
           rows="4"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
@@ -633,7 +663,7 @@ function ProjectIdeaGenerator() {
       </div>
       <button
         onClick={generateIdea}
-        className="w-full flex items-center justify-center px-8 py-4 bg-emerald-600 text-white font-bold rounded-full shadow-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed" /* Emerald button */
+        className="w-full flex items-center justify-center px-8 py-4 bg-emerald-600 text-white font-bold rounded-full shadow-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={loading}
       >
         {loading ? (
@@ -647,8 +677,8 @@ function ProjectIdeaGenerator() {
       </button>
 
       {generatedIdea && (
-        <div className="mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-lg shadow-md animate-fade-in-up"> {/* Emerald background/border */}
-          <h3 className="text-xl font-semibold text-emerald-800 mb-4">Your Custom Project Idea:</h3> {/* Emerald text */}
+        <div className="mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-lg shadow-md animate-fade-in-up">
+          <h3 className="text-xl font-semibold text-emerald-800 mb-4">Your Custom Project Idea:</h3>
           {generatedIdea}
         </div>
       )}
