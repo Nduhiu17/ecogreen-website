@@ -301,7 +301,9 @@ function App() {
             <h4 className="text-xl font-semibold text-white mb-4">Contact Us</h4>
             <p className="mb-2">Nairobi, Kenya</p>
             <p className="mb-2">Phone: <a href="tel:+254796515157" className="hover:text-emerald-400 transition-colors duration-200">+254 796515157</a></p>
-            <p className="mb-2">Email: <a href="mailto:info@ecogreen.com" className="hover:text-emerald-400 transition-colors duration-200">info@ecogreen.com</a></p>
+            <p className="mb-2 text-xs sm:text-sm break-words">
+              Email: <a href="mailto:info@ecogreencontractors.solutions" className="hover:text-emerald-400 transition-colors duration-200">info@ecogreencontractors.solutions</a>
+            </p>          
           </div>
 
           {/* Column 3: Quick Links */}
