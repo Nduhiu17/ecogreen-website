@@ -15,6 +15,48 @@ import drain from './assets/drain.png'
 import kerbs1 from './assets/kerbs1.png'
 import kerbs from './assets/kerbs.png'
 
+// Visually Appealing About Us Section Component
+function AboutUs() {
+  return (
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-6 md:px-12">
+        <div className="lg:flex lg:items-center lg:justify-between">
+          <div className="lg:w-1/2">
+            <h2 className="text-3xl font-bold text-emerald-700 sm:text-4xl mb-6">Our Story</h2>
+            <p className="text-gray-700 leading-relaxed mb-6">
+              Welcome to Ecogreen Landscapers & Contractors, where we believe in transforming outdoor spaces into havens of beauty and functionality. Founded on the principles of sustainability and quality craftsmanship, we have been serving the Nairobi community and beyond with dedication and expertise.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-6">
+              Our journey began with a simple vision: to create landscapes that not only enhance the aesthetic appeal of properties but also contribute to a greener environment. Over the years, we have grown into a comprehensive landscaping and construction service provider, offering everything from lush garden designs to robust infrastructure solutions.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              At Ecogreen, we are more than just a company; we are a team of passionate individuals committed to excellence and environmental stewardship. We work closely with our clients to understand their needs and deliver bespoke solutions that exceed their expectations.
+            </p>
+            <div className="mt-8">
+              <a href="#contact" className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-full shadow-md transition duration-300">
+                Download Our Company Profile
+              </a>
+            </div>
+          </div>
+          <div className="lg:w-1/2 mt-10 lg:mt-0">
+            <div className="relative rounded-lg overflow-hidden shadow-xl">
+              <img
+                src="https://placehold.co/800x600/228B22/FFFFFF?text=Our+Team+or+Projects"
+                alt="Ecogreen Team or Projects"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/80 to-green-500/70"></div>
+              <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-white text-xl font-bold">
+                Creating Sustainable Spaces
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // Main App Component
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -144,6 +186,9 @@ function App() {
           </button>
         </div>
       </header>
+
+      {/* About Us Section */}
+      <AboutUs />
 
       {/* Services Section */}
       <section id="services" className="py-16 md:py-24 bg-white shadow-inner">
@@ -303,7 +348,7 @@ function App() {
             <p className="mb-2">Phone: <a href="tel:+254796515157" className="hover:text-emerald-400 transition-colors duration-200">+254 796515157</a></p>
             <p className="mb-2 text-xs sm:text-sm break-words">
               Email: <a href="mailto:info@ecogreencontractors.solutions" className="hover:text-emerald-400 transition-colors duration-200">info@ecogreencontractors.solutions</a>
-            </p>          
+            </p>
           </div>
 
           {/* Column 3: Quick Links */}
