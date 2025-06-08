@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import cabrosImg from './assets/work-in-progress-cabros.jpg'; 
+import React, { useState, useEffect, useRef } from 'react'; // Import useRef
+import cabrosImg from './assets/work-in-progress-cabros.jpg';
 import cabrosImg1 from './assets/cabros1.jpeg';
-import drainageImg from './assets/drainage-construction-work.jpg'; 
+import drainageImg from './assets/drainage-construction-work.jpg';
 import drainageImg1 from './assets/drainage1.jpeg';
 import roadImg1 from './assets/road.jpeg';
 import roadImg from './assets/road1.jpg';
-import whatsappIcon from './assets/whatsapp.svg'; 
+import whatsappIcon from './assets/whatsapp.svg';
 import landscaping1 from './assets/landscaping1.png'
 import landscaping from  './assets/landscaping.png'
 import cabros1 from './assets/cabros1.png'
@@ -14,6 +14,7 @@ import drain1 from './assets/drain1.png'
 import drain from './assets/drain.png'
 import kerbs1 from './assets/kerbs1.png'
 import kerbs from './assets/kerbs.png'
+
 // Main App Component
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -40,7 +41,6 @@ function App() {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-inter antialiased">
       {/* Navbar */}
@@ -49,7 +49,7 @@ function App() {
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2">
             <img src="https://placehold.co/40x40/228B22/FFFFFF?text=Logo" alt="Ecogreen Logo" className="h-10 w-10 rounded-full shadow-md" />
-            <span className="text-xl font-bold text-emerald-700">Ecogreen</span>
+            <span className="text-xl font-bold text-emerald-700 text-center">Ecogreen</span>
           </a>
 
           {/* Mobile Menu Button */}
@@ -115,7 +115,7 @@ function App() {
 
       {/* Header/Hero Section (Adjusted padding-top to account for fixed navbar) */}
       <header className="relative h-screen flex items-center justify-center text-center bg-cover bg-center pt-16 md:pt-24" // Added padding-top
-        style={{ backgroundImage: `url(https://placehold.co/1920x1080/228B22/FFFFFF?text=Ecogreen+Landscaping)` }}> {/* Changed image placeholder to a green tone */}
+        style={{ backgroundImage: `url(https://placehold.co/1920x1080/228B22/FFFFFF?text=Ecogreen+Landscapers&Contractors)` }}>
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-700/80 to-green-600/70"></div> {/* Green gradient */}
         <div className="relative z-10 p-6 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight animate-fade-in-down drop-shadow-lg">
@@ -124,7 +124,7 @@ function App() {
           <p className="mt-4 text-xl md:text-2xl text-emerald-100 font-light animate-fade-in-up delay-200 drop-shadow"> {/* Emerald text */}
             Your Trusted Partner in Landscaping, Construction & Drainage Solutions.
           </p>
-          <button className="mt-8 px-8 py-4 bg-white text-emerald-700 font-bold rounded-full shadow-lg hover:bg-emerald-100 transition duration-300 transform hover:scale-105 active:scale-95 animate-bounce-slow"> 
+          <button className="mt-8 px-8 py-4 bg-white text-emerald-700 font-bold rounded-full shadow-lg hover:bg-emerald-100 transition duration-300 transform hover:scale-105 active:scale-95 animate-bounce-slow">
             <a
                   href="https://wa.me/254758712537"
                   target="_blank"
@@ -163,7 +163,7 @@ function App() {
                 cabrosImg1,
                 cabrosImg,
                 cabros1,
-                cabros 
+                cabros
               ]}
               // Using a ref to get offsetTop more reliably
               elementRef={(el) => el && fadeIn(el.offsetTop)}
@@ -176,7 +176,7 @@ function App() {
                 drainageImg,
                 drainageImg1,
                 drain1 ,
-                drain 
+                drain
               ]}
               elementRef={(el) => el && fadeIn(el.offsetTop)}
             />
@@ -294,7 +294,25 @@ function App() {
 // Service Card Component
 function ServiceCard({ title, description, images, elementRef }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const cardRef = React.useRef(null); // Create a ref for the card element
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null); // Use useRef for the card element
+
+  // Ref for the interval timer
+  const intervalRef = useRef(null);
+
+  const startAutoCycle = () => {
+    if (images.length > 1) {
+      intervalRef.current = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      }, 3000); // Change image every 3 seconds
+    }
+  };
+
+  const stopAutoCycle = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
 
   useEffect(() => {
     // Pass the element's offset to the parent's fadeIn function via elementRef prop
@@ -302,19 +320,46 @@ function ServiceCard({ title, description, images, elementRef }) {
       elementRef(cardRef.current);
     }
 
-    // Auto-cycle images every 3 seconds if there are multiple images
-    if (images.length > 1) {
-      const timer = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, 3000);
-      return () => clearInterval(timer);
+    // Start auto-cycling when component mounts or images change, if not hovered
+    if (!isHovered) {
+      startAutoCycle();
     }
-  }, [images.length, elementRef]); // Add elementRef to dependencies
+
+    // Cleanup interval on component unmount or images/hover state change
+    return () => stopAutoCycle();
+  }, [images.length, elementRef, isHovered]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    stopAutoCycle(); // Pause autoplay on hover
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    startAutoCycle(); // Resume autoplay when not hovered
+  };
+
+  const goToPrev = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    stopAutoCycle(); // Stop auto-cycle on manual navigation
+    startAutoCycle(); // Restart after a brief moment to avoid immediate next slide
+  };
+
+  const goToNext = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    stopAutoCycle(); // Stop auto-cycle on manual navigation
+    startAutoCycle(); // Restart after a brief moment to avoid immediate next slide
+  };
 
   const motionClass = elementRef ? elementRef(cardRef.current) : ''; // Get the motion class from parent
 
   return (
-    <div ref={cardRef} className={`bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}>
+    <div
+      ref={cardRef}
+      className={`bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-103 transition-all duration-500 ease-in-out ${motionClass}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="relative h-60 overflow-hidden">
         {images.map((img, index) => (
           <img
@@ -325,6 +370,46 @@ function ServiceCard({ title, description, images, elementRef }) {
             onError={(e) => { e.target.src = 'https://placehold.co/800x600/CCCCCC/000000?text=Image+Error'; }}
           />
         ))}
+
+        {images.length > 1 && (
+          <>
+            {/* Navigation Arrows */}
+            <button
+              onClick={goToPrev}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 bg-opacity-70 text-white p-3 rounded-r-lg focus:outline-none hover:bg-opacity-90 transition-opacity duration-300 transform hover:scale-110"
+              aria-label="Previous image"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </button>
+            <button
+              onClick={goToNext}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 bg-opacity-70 text-white p-3 rounded-l-lg focus:outline-none hover:bg-opacity-90 transition-opacity duration-300 transform hover:scale-110"
+              aria-label="Next image"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+
+            {/* Indicators */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              {images.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setCurrentImageIndex(idx);
+                    stopAutoCycle(); // Stop auto-cycle on manual navigation
+                    startAutoCycle(); // Restart after a brief moment
+                  }}
+                  className={`w-3 h-3 rounded-full ${idx === currentImageIndex ? 'bg-white' : 'bg-gray-400'} opacity-75 focus:outline-none hover:opacity-100 transition-colors duration-300`}
+                  aria-label={`Go to image ${idx + 1}`}
+                ></button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
       <div className="p-6">
         <h3 className="text-2xl font-semibold text-emerald-700 mb-3">{title}</h3> {/* Emerald text */}
@@ -337,7 +422,7 @@ function ServiceCard({ title, description, images, elementRef }) {
 // Landscaping Specific Card Component (Before & After)
 function LandscapingCard({ title, description, beforeImage, afterImage, elementRef }) {
   const [showBefore, setShowBefore] = useState(true);
-  const cardRef = React.useRef(null); // Create a ref for the card element
+  const cardRef = useRef(null); // Create a ref for the card element
 
   useEffect(() => {
     // Pass the element's offset to the parent's fadeIn function via elementRef prop
@@ -377,7 +462,7 @@ function LandscapingCard({ title, description, beforeImage, afterImage, elementR
 
 // Project Card Component
 function ProjectCard({ title, image, elementRef }) {
-  const cardRef = React.useRef(null); // Create a ref for the card element
+  const cardRef = useRef(null); // Create a ref for the card element
 
   useEffect(() => {
     // Pass the element's offset to the parent's fadeIn function via elementRef prop
@@ -405,7 +490,7 @@ function ProjectCard({ title, image, elementRef }) {
 
 // Testimonial Card Component
 function TestimonialCard({ quote, author, elementRef }) {
-  const cardRef = React.useRef(null); // Create a ref for the card element
+  const cardRef = useRef(null); // Create a ref for the card element
 
   useEffect(() => {
     // Pass the element's offset to the parent's fadeIn function via elementRef prop
@@ -445,29 +530,79 @@ function ProjectIdeaGenerator() {
     try {
       let chatHistory = [];
       chatHistory.push({ role: "user", parts: [{ text: `Generate a creative and concise landscaping or construction project idea based on the following description, suitable for a company like Ecogreen. Focus on unique features, benefits, and a catchy name. Description: "${prompt}"` }] });
-      const payload = { contents: chatHistory };
+
+      // We'll call the API twice: once for the idea, once for the image prompt
+      // First call: get the idea
+      const ideaPayload = { contents: [chatHistory[0]] };
       const apiKey = "AIzaSyC1q_KJysimHoEnfZgofyIrsahF7NLmP0c"; // Canvas will automatically provide this at runtime
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-      const response = await fetch(apiUrl, {
+      const ideaResponse = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(ideaPayload)
       });
+      const ideaResult = await ideaResponse.json();
 
-      const result = await response.json();
-
-      if (result.candidates && result.candidates.length > 0 &&
-          result.candidates[0].content && result.candidates[0].content.parts &&
-          result.candidates[0].content.parts.length > 0) {
-        const text = result.candidates[0].content.parts[0].text;
-        setGeneratedIdea(text);
+      let ideaText = '';
+      if (ideaResult.candidates && ideaResult.candidates.length > 0 &&
+          ideaResult.candidates[0].content && ideaResult.candidates[0].content.parts &&
+          ideaResult.candidates[0].content.parts.length > 0) {
+        ideaText = ideaResult.candidates[0].content.parts[0].text;
       } else {
         setError('Failed to generate an idea. Please try again or refine your prompt.');
-        console.error('Gemini API response structure unexpected:', result);
+        setLoading(false);
+        return;
       }
+
+      // Second call: get the image prompt from a new conversation with the idea
+      const imagePromptChatHistory = [];
+      imagePromptChatHistory.push({ role: "user", parts: [{ text: `Based on this project idea: "${ideaText}", suggest a relevant royalty-free image prompt for this project idea. Only output the image prompt, nothing else. The image prompt should be suitable for a general image search engine like Unsplash, avoiding specific brand names.` }] });
+      const imagePromptPayload = { contents: imagePromptChatHistory };
+
+
+      const imagePromptResponse = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(imagePromptPayload)
+      });
+      const imagePromptResult = await imagePromptResponse.json();
+
+      let imagePrompt = '';
+      if (imagePromptResult.candidates && imagePromptResult.candidates.length > 0 &&
+          imagePromptResult.candidates[0].content && imagePromptResult.candidates[0].content.parts &&
+          imagePromptResult.candidates[0].content.parts.length > 0) {
+        imagePrompt = imagePromptResult.candidates[0].content.parts[0].text.replace(/["\n]/g, '').trim(); // Clean up response
+      }
+
+      // Use Unsplash for royalty-free images
+      let imageUrl = '';
+      if (imagePrompt) {
+        const encodedPrompt = encodeURIComponent(imagePrompt);
+        imageUrl = `https://source.unsplash.com/800x600/?${encodedPrompt}`;
+      }
+
+      setGeneratedIdea(
+        <>
+          <div className="flex flex-col md:flex-row items-center gap-6">
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt={imagePrompt || 'Generated Project Idea Image'}
+            className="w-full md:w-1/2 rounded-lg shadow-md mb-4 md:mb-0"
+            style={{ maxHeight: 300, objectFit: 'cover' }}
+            onError={(e) => { e.target.src = 'https://placehold.co/800x600/CCCCCC/000000?text=Image+Not+Found'; }}
+          />
+        )}
+        <div className="w-full md:w-1/2">
+          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{ideaText}</p>
+        </div>
+          </div>
+        </>
+      );
+
     } catch (err) {
-      setError('An error occurred while connecting to the AI. Please check your network and try again.');
+      setError('An error occurred while connecting to the AI or generating content. Please check your network and try again.');
       console.error('Error calling Gemini API:', err);
     } finally {
       setLoading(false);
@@ -507,7 +642,7 @@ function ProjectIdeaGenerator() {
       {generatedIdea && (
         <div className="mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-lg shadow-md animate-fade-in-up"> {/* Emerald background/border */}
           <h3 className="text-xl font-semibold text-emerald-800 mb-4">Your Custom Project Idea:</h3> {/* Emerald text */}
-          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{generatedIdea}</p>
+          {generatedIdea}
         </div>
       )}
 
