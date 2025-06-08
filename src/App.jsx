@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'; // Import useRef
+import React, { useState, useEffect, useRef } from 'react';
 import cabrosImg from './assets/work-in-progress-cabros.jpg';
 import cabrosImg1 from './assets/cabros1.jpeg';
 import drainageImg from './assets/drainage-construction-work.jpg';
@@ -19,11 +19,17 @@ import kerbs from './assets/kerbs.png'
 function App() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const [hasScrolled, setHasScrolled] = useState(false); // New state for scroll shadow
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
+      // Add or remove shadow based on scroll position
+      if (window.scrollY > 0) {
+        setHasScrolled(true);
+      } else {
+        setHasScrolled(false);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -44,8 +50,12 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-inter antialiased">
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full bg-white bg-opacity-95 shadow-md z-50 transition-all duration-300">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <nav
+        className={`fixed top-0 left-0 w-full bg-white bg-opacity-95 z-50 transition-all duration-300 ${
+          hasScrolled ? 'shadow-lg py-3' : 'shadow-md py-4' // Dynamic shadow and padding
+        }`}
+      >
+        <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2">
             <img src="https://placehold.co/40x40/228B22/FFFFFF?text=Logo" alt="Ecogreen Logo" className="h-10 w-10 rounded-full shadow-md" />
@@ -66,49 +76,46 @@ function App() {
               )}
             </svg>
           </button>
-                <div className="hidden md:flex space-x-8">
-                <a href="#" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Home</a>
-                <a href="#services" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Services</a>
-                <a href="#projects" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Projects</a>
-                <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Testimonials</a>
-                <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Get Ideas</a>
-                <a
-                  href="https://wa.me/254758712537"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center"
-                  title="Chat with us on WhatsApp"
-                >
-                  <img
-                  src={whatsappIcon}
-                  alt="WhatsApp"
-                  // className="h-16 w-16"
-                  />
-                </a>
-                </div>
-              </div>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex space-x-8">
+            <a href="#" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Home</a>
+            <a href="#services" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Services</a>
+            <a href="#projects" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Projects</a>
+            <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Testimonials</a>
+            <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Get Ideas</a>
+            <a
+              href="https://wa.me/254758712537"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center"
+              title="Chat with us on WhatsApp"
+            >
+              <img src={whatsappIcon} alt="WhatsApp" />
+            </a>
+          </div>
+        </div>
 
-              {/* Mobile Menu Overlay */}
-        <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} bg-white shadow-lg pb-4`}>
-          <div className="flex flex-col items-center space-y-4 pt-2">
+        {/* Mobile Menu Overlay with Slide-in/Slide-out */}
+        <div
+          className={`md:hidden absolute top-full left-0 w-full bg-white shadow-lg transform transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-full opacity-0 invisible'
+          }`}
+        >
+          <div className="flex flex-col items-center space-y-4 py-4">
             <a href="#" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Home</a>
             <a href="#services" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Services</a>
             <a href="#projects" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Projects</a>
             <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Testimonials</a>
             <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium py-2" onClick={toggleMobileMenu}>Get Ideas</a>
-             <a
-                  href="https://wa.me/254758712537"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center"
-                  title="Chat with us on WhatsApp"
-                >
-                  <img
-                  src={whatsappIcon}
-                  alt="WhatsApp"
-                  className="h-26 w-26"
-                  />
-                  </a>
+            <a
+              href="https://wa.me/254758712537"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center"
+              title="Chat with us on WhatsApp"
+            >
+              <img src={whatsappIcon} alt="WhatsApp" className="h-16 w-16" /> {/* Adjusted size for mobile menu */}
+            </a>
           </div>
         </div>
       </nav>
