@@ -14,6 +14,7 @@ import drain1 from './assets/drain1.png'
 import drain from './assets/drain.png'
 import kerbs1 from './assets/kerbs1.png'
 import kerbs from './assets/kerbs.png'
+import profilePdf from './assets/profile.pdf'
 
 // Visually Appealing About Us Section Component
 function AboutUs() {
@@ -33,7 +34,11 @@ function AboutUs() {
               At Ecogreen, we are more than just a company; we are a team of passionate individuals committed to excellence and environmental stewardship. We work closely with our clients to understand their needs and deliver bespoke solutions that exceed their expectations.
             </p>
             <div className="mt-8">
-              <a href="#contact" className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-full shadow-md transition duration-300">
+              <a
+                href={profilePdf}
+                download="Ecogreen-Company-Profile.pdf"
+                className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-full shadow-md transition duration-300"
+              >
                 Download Our Company Profile
               </a>
             </div>
