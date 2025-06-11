@@ -15,6 +15,13 @@ import drain from './assets/drain.png'
 import kerbs1 from './assets/kerbs1.png'
 import kerbs from './assets/kerbs.png'
 import profilePdf from './assets/profile.pdf'
+import ReactGA from 'react-ga4';
+
+const TRACKING_ID = "G-WPQ06FC0SW"; // Replace with your actual Measurement ID
+ReactGA.initialize(TRACKING_ID);
+ReactGA.initialize(TRACKING_ID);
+
+
 
 // Visually Appealing About Us Section Component
 function AboutUs() {
