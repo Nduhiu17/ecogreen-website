@@ -18,6 +18,18 @@ import profilePdf from './assets/profile.pdf'
 
 // Visually Appealing About Us Section Component
 function AboutUs() {
+  const handleProfileDownload = (e) => {
+    e.preventDefault();
+    const link = document.createElement('a');
+    link.href = profilePdf;
+    link.download = 'Ecogreen-Company-Profile.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    // Open the PDF in a new tab after download
+    window.open(profilePdf, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-6 md:px-12">
@@ -37,6 +49,7 @@ function AboutUs() {
               <a
                 href={profilePdf}
                 download="Ecogreen-Company-Profile.pdf"
+                onClick={handleProfileDownload}
                 className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-full shadow-md transition duration-300"
               >
                 Download Our Company Profile
