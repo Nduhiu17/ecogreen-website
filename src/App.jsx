@@ -151,7 +151,7 @@ function App() {
             <a href="#testimonials" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Testimonials</a>
             <a href="#project-generator" className="text-gray-600 hover:text-emerald-700 transition duration-200 font-medium">Get Ideas</a>
             <a
-              href="https://wa.me/254796515157"
+              href="https://wa.me/254746887291"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center"
@@ -200,7 +200,7 @@ function App() {
           </p>
           <button className="mt-8 px-8 py-4 bg-white text-emerald-700 font-bold rounded-full shadow-lg hover:bg-emerald-100 transition duration-300 transform hover:scale-105 active:scale-95 animate-bounce-slow">
             <a
-                  href="https://wa.me/254796515157"
+                  href="https://wa.me/254796887291"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center"
@@ -370,7 +370,7 @@ function App() {
           <div className="md:col-span-1 text-center md:text-left">
             <h4 className="text-xl font-semibold text-white mb-4">Contact Us</h4>
             <p className="mb-2">Nairobi, Kenya</p>
-            <p className="mb-2">Phone: <a href="tel:+254796515157" className="hover:text-emerald-400 transition-colors duration-200">+254 796515157</a></p>
+            <p className="mb-2">Phone: <a href="tel:+254746887291" className="hover:text-emerald-400 transition-colors duration-200">+254 796515157</a></p>
             <p className="mb-2 text-xs sm:text-sm break-words">
               Email: <a href="mailto:info@ecogreencontractors.solutions" className="hover:text-emerald-400 transition-colors duration-200">info@ecogreencontractors.solutions</a>
             </p>
@@ -391,7 +391,7 @@ function App() {
           <div className="md:col-span-1 flex flex-col items-center md:items-start">
             <h4 className="text-xl font-semibold text-white mb-4">Connect With Us</h4>
             <a
-              href="https://wa.me/254796515157"
+              href="https://wa.me/254746887291"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 transform hover:scale-105"
@@ -749,7 +749,7 @@ function ProjectIdeaGenerator() {
       </button>
       {/* Floating WhatsApp Icon (left center) */}
       <a
-        href="https://wa.me/254796515157"
+        href="https://wa.me/254746887291"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-300 focus:ring-opacity-75"
